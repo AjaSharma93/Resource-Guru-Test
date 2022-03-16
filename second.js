@@ -1,5 +1,6 @@
 const assert = require("assert");
 
+// JSON config of operators will support extensibility
 const cases = { "+": "+", "-": "-", "x": "*", "÷": "/" }
 // ES6 way to declare classes, we could also use ES5, or typescript.
 class Node {
@@ -13,12 +14,12 @@ class Node {
     result() {
         // eval() does provide a shorthand for evaluating arithmetic operations.
         // this.operator==="" could also be used as the condition in this case.
-        if (['+', '-', "x", "÷"].includes(this.operator)) return eval(`${this.left.result()} ${cases[this.operator]} ${this.right.result()}`);
+        if (Object.keys(cases).includes(this.operator)) return eval(`${this.left.result()} ${cases[this.operator]} ${this.right.result()}`);
         return this.value;
     }
 
     toString() {
-        return (['+', '-', "x", "÷"].includes(this.operator)) ? `(${this.left.toString()} ${this.operator} ${this.right.toString()})` : this.value.toString();
+        return (Object.keys(cases).includes(this.operator)) ? `(${this.left.toString()} ${this.operator} ${this.right.toString()})` : this.value.toString();
     }
 }
 
